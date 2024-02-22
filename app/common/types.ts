@@ -14,6 +14,7 @@ export type FuncIcon = {
 
 export type MsgContent = {
     name: string;
+    picurl: string;
     message: string;
     confirmed: boolean;
     postat: string;

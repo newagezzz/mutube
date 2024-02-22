@@ -5,6 +5,7 @@ import Colors from '@/constants/Colors';
 import { useColorScheme } from '@/components/useColorScheme';
 import { useClientOnlyValue } from '@/components/useClientOnlyValue';
 import Icon from 'react-native-vector-icons/FontAwesome';
+//import { FontAwesome as Icon } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import {LoadUserAction} from "../store/actions/userAction"
 

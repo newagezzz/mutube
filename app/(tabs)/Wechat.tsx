@@ -134,6 +134,7 @@ const Wechat = ( props: any ) => {
     const date = new Date();
     const msgCont: MsgContent = {
         name: user.name.first,
+        picurl: user.picture.thumbnail,
         message: msg,
         confirmed: false,
         postat: date.toLocaleString("ja"),
@@ -169,6 +170,7 @@ const Wechat = ( props: any ) => {
     const date = new Date();
     const  msgCont: MsgContent = {
         name: user.name.first,
+        picurl: user.picture.thumbnail,
         message: message,
         confirmed: true,
         postat: date.toLocaleString("ja"),
@@ -204,7 +206,7 @@ const Wechat = ( props: any ) => {
                     <Icon name={iconName} color="purple" size={15}/>
                     <Image style={{width: 20, height: 20,}} source={require('../resource/playlist.gif')}/>
                     */}
-                    <Image style={{width: 20, height: 20,}} source={{ uri: user.picture.thumbnail }}/> 
+                    <Image style={{width: 20, height: 20,}} source={{ uri: msg.picurl }}/> 
                 </View>
             </View>
         )
@@ -214,7 +216,7 @@ const Wechat = ( props: any ) => {
                 {/*
                 <Icon name={iconName} color="purple" size={15}/>
                 */}
-                <Image style={{width: 20, height: 20,}} source={{ uri: user.picture.thumbnail }}/> 
+                <Image style={{width: 20, height: 20,}} source={{ uri: msg.picurl }}/> 
                 <Text style={{ textAlign: 'left' }}>{msg.name}　{msg.message}</Text>
             </View>
         )

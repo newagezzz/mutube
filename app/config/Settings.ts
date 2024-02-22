@@ -1,16 +1,15 @@
 // Environtment variable import
 import Config from 'react-native-config';
 import { Platform } from 'react-native';
+import * as SECRET from "../secret"
 
-//old api-key
-//const API_KEY = "AIzaSyDJ3iAHScYlxS3sV9PA652GV_Cg3ilNJAk"
-const API_KEY = "AIzaSyApbeG0-_2qH4xKmOl8YrKhhq9m5M8hLfE"
+const API_KEY = SECRET.YOUTUBE_API_KEY
+const MUSERVER_GCP = SECRET.MUSERVER_GCP_URL
 const YTMAXRECORDS = 50;
 const YTSORTBY = "title";
 const YTTYPE = "video"
 const MUSERVER_LOCAL_EMU="http://10.0.2.2:8088/"
 const MUSERVER_LOCAL_WEB="http://localhost:8088/"
-const MUSERVER_GCP="https://youtube-api-call-20211016.an.r.appspot.com/"
 const MUTUBE_MODE="release"
 export const YTPAGE = "&pageToken=";
 export const YTURL = `https://youtube.googleapis.com/youtube/v3/search?&part=snippet&order=${YTSORTBY}&type=${YTTYPE}&key=${API_KEY}&maxResults=${YTMAXRECORDS}&q=`;

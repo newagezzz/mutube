@@ -9,6 +9,7 @@ import YoutubePlayer from "react-native-youtube-iframe";
 //import ytdl from "react-native-ytdl";
 //import ytdl from "ytdl-core";
 import Icon from 'react-native-vector-icons/FontAwesome';
+//import { FontAwesome as Icon } from '@expo/vector-icons';
 
 const SCREEN_HEIGHT = Dimensions.get('window').height;
 let pageURL = "";
