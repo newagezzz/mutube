@@ -11,6 +11,7 @@ const YTTYPE = "video"
 const MUSERVER_LOCAL_EMU="http://10.0.2.2:8088/"
 const MUSERVER_LOCAL_WEB="http://localhost:8088/"
 const MUTUBE_MODE="release"
+//const MUTUBE_MODE="debug"
 export const YTPAGE = "&pageToken=";
 export const YTURL = `https://youtube.googleapis.com/youtube/v3/search?&part=snippet&order=${YTSORTBY}&type=${YTTYPE}&key=${API_KEY}&maxResults=${YTMAXRECORDS}&q=`;
 export const YTIMGURL = `https://i.ytimg.com/vi/`;
@@ -32,6 +33,8 @@ if (MUTUBE_MODE == "release") {
     } else {
         varUrl = MUSERVER_LOCAL_EMU;
     }
+} else {
+    varUrl = MUSERVER_LOCAL_WEB;
 }
 export const REACT_APP_MUSERVER = varUrl ? varUrl : "http://localhost:8088";
 console.log("!!!!!!!!!!!!!!config/Settings!!!!!!!!!!!!!!!!!");

@@ -41,3 +41,15 @@ export interface VideoInfo {
   likeCount: string;
   commentCount:string;
 }
+
+export type Point = {
+  x: number;
+  y: number;
+};
+
+export type LineInfo = {
+  name: string;
+  color: string;
+  points: Point[];
+  confirmed: boolean;
+}
