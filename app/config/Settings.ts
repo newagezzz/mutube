@@ -1,7 +1,7 @@
 // Environtment variable import
 import Config from 'react-native-config';
 import { Platform } from 'react-native';
-import * as SECRET from "../secret"
+import * as SECRET from "../secret/index"
 
 const API_KEY = SECRET.YOUTUBE_API_KEY
 const MUSERVER_GCP = SECRET.MUSERVER_GCP_URL
@@ -10,8 +10,8 @@ const YTSORTBY = "title";
 const YTTYPE = "video"
 const MUSERVER_LOCAL_EMU="http://10.0.2.2:8088/"
 const MUSERVER_LOCAL_WEB="http://localhost:8088/"
-const MUTUBE_MODE="release"
-//const MUTUBE_MODE="debug"
+//const MUTUBE_MODE="release"
+const MUTUBE_MODE="debug"
 export const YTPAGE = "&pageToken=";
 export const YTURL = `https://youtube.googleapis.com/youtube/v3/search?&part=snippet&order=${YTSORTBY}&type=${YTTYPE}&key=${API_KEY}&maxResults=${YTMAXRECORDS}&q=`;
 export const YTIMGURL = `https://i.ytimg.com/vi/`;

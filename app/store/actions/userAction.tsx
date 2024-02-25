@@ -1,5 +1,5 @@
 import axios from "axios"
-import * as ACTIONS from '../types';
+import * as ACTIONS from '../types/index';
 import * as EnvSettings from "../../config/Settings";
 
 const initData = {

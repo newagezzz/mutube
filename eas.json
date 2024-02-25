@@ -10,7 +10,9 @@
     "preview": {
       "distribution": "internal"
     },
-    "production": {}
+    "production": {
+      "plugins": ["transform-remove-console"]
+    }
   },
   "submit": {
     "production": {}

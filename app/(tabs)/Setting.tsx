@@ -40,6 +40,7 @@ const Setting = (props: any) => {
   const [points, setPoints] = useState<Point[]>([]);
   const [line, setLine] = useState({});
   const [lineList, setLineList] = useState<LineInfo[]>([]);
+  const [mouseDown, setMouseDown] = useState(false);
 
   const updLineList = ((lineList: LineInfo[], line: LineInfo) => {
     console.log("!!!!!!!!!!!!!!!!Setting!!!!!!!!updLineList!!!!!!!!");
@@ -127,15 +128,52 @@ const Setting = (props: any) => {
     }
   }
 
-  const onPointerOn = async (event: GestureResponderEvent) => {
-    console.log("!!!!!!!!!!!!!!!!onPointerOn!!!!!!!!!!!!!!!!");
+  const onPointerDown = async (event: PointerEvent) => {
+    console.log("!!!!!!!!!!!!!!!!onPointerDown!!!!!!!!!!!!!!!!");
+    setMouseDown(true);
+    if (points.length > 0) {
+      /* TODO: ここでFireStoreにpolylineドキュメントを追加する処理 */
+      // 描画中の線分の情報をクリア
+      setPoints([]);
+    }
   }
-  const onPointerEnter = (event: PointerEvent) => {
+  const onPointerUp = async (event: PointerEvent) => {
+    console.log("!!!!!!!!!!!!!!!!onPointerUp!!!!!!!!!!!!!!!!");
+    setMouseDown(false);
+    if (points.length > 0) {
+      /* TODO: ここでFireStoreにpolylineドキュメントを追加する処理 */
+      const line: LineInfo = {
+          name: user.name.first,
+          color: color,
+          points: points,
+          confirmed: true,
+      };
+      console.log(line);
+      socket.emit("draw line", line);
+      // 描画中の線分の情報をクリア
+      setPoints([]);
+    }
+
+  }
+  const onPointerEnter = async (event: PointerEvent) => {
     console.log("!!!!!!!!!!!!!!!!onPointerEnter!!!!!!!!!!!!!!!!");
+    console.log(event);
+    console.log("----------------------------")
   }
-  const onPointerMove = async (event: GestureResponderEvent) => {
-    console.log("!!!!!!!!!!!!!!!!onPointerMove!!!!!!!!!!!!!!!!");
+  const onPointerMove = async (event: PointerEvent) => {
+    if (mouseDown) {
+      console.log("!!!!!!!!!!!!!!!!onPointerMove!!!!!!!!!!!!!!!!");
+      console.log(event);
+      console.log("----------------------------")
+ 
+      const { clientX, clientY, screenX, screenY } = event.nativeEvent;
+      //if (touches.length === 1) {
+      // 描画中の線分の情報を追加する
+      setPoints([...points, { x: clientX, y: clientY }]);
+      //}
+    }
   }
+
   const onPointerLeave = async (event: GestureResponderEvent) => {
     console.log("!!!!!!!!!!!!!!!!onPointerLeave!!!!!!!!!!!!!!!!");
   }
@@ -209,8 +247,9 @@ const Setting = (props: any) => {
       </TextTicker>
       <View style={{ flexDirection: 'row'}}>
         <View pointerEvents="auto"
-          //onPress={(e: GestureResponderEvent) => onPress(e)}
-          onPointerEnter={onPointerEnter}
+          onPointerDown={onPointerDown}
+          onPointerMove={onPointerMove}
+          onPointerUp={onPointerUp}
           onTouchMove={onTouchMove}
           onTouchStart={onTouchStart}
           onTouchEnd={onTouchEnd}
