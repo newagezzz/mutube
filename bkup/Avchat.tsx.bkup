@@ -1,0 +1,145 @@
+import {Text, View, StyleSheet, Button, TouchableOpacity } from 'react-native';
+import { useState, useEffect } from 'react';
+import TextTicker from 'react-native-text-ticker'
+import { Audio } from "expo-av";
+import Icon from 'react-native-vector-icons/FontAwesome';
+//import * as FileSystem from 'react-native-fs';
+import * as FileSystem from 'expo-file-system';
+
+const Avchat = () => {
+  console.log("!!!!!!!!!!!!!!!!Avchat!!!!!!!!!!!!!!!!");
+
+  const [recording, setRecording] = useState();
+  const [permissionResponse, requestPermission] = Audio.usePermissions();
+  //
+  const [isRecording, setIsRecording] = useState(false);
+  const [recordingStatus, setRecordingStatus] = useState("idle");
+  const [audioPermission, setAudioPermission] = useState(false);
+  const [recordedAudio, setRecordedAudio] = useState(null);
+
+  async function startRecording() {
+    try {
+      if (permissionResponse.status !== 'granted') {
+        console.log('Requesting permission..');
+        await requestPermission();
+      }
+      await Audio.setAudioModeAsync({
+        allowsRecordingIOS: true,
+        playsInSilentModeIOS: true,
+      });
+
+      console.log('Starting recording..');
+      const { recording } = await Audio.Recording.createAsync( Audio.RecordingOptionsPresets.HIGH_QUALITY
+      );
+      setRecording(recording);
+      console.log('Recording started');
+      setIsRecording(true);
+    } catch (err) {
+      console.error('Failed to start recording', err);
+    }
+  }
+  
+  async function stopRecording() {
+    console.log('Stopping recording..');
+    setRecording(undefined);
+    setIsRecording(false);
+    await recording.stopAndUnloadAsync();
+    await Audio.setAudioModeAsync(
+      {
+        allowsRecordingIOS: false,
+      }
+    );
+    const recordingUri = recording.getURI();
+    console.log('Recording stopped and stored at', recordingUri);
+
+    // Create a file name for the recording
+    const fileName = `recording-${Date.now()}.caf`;
+    // Move the recording to the new directory with the new file name
+    await FileSystem.makeDirectoryAsync(FileSystem.documentDirectory + 'recordings/', { intermediates: true });
+    await FileSystem.moveAsync({
+      from: recordingUri,
+      to: FileSystem.documentDirectory + 'recordings/' + `${fileName}`
+    });
+
+    // Move the recording to the new directory with the new file name
+    //await FileSystem.mkdir(FileSystem.DocumentDirectoryPath  + 'recordings/');
+    //await FileSystem.moveFile(uri, FileSystem.DocumentDirectoryPath + 'recordings/' + `${fileName}`);
+    // This is for simply playing the sound back
+    /*
+    const playbackObject = new Audio.Sound();
+    await playbackObject.loadAsync({ uri: FileSystem.documentDirectory + 'recordings/' + `${fileName}` });
+    await playbackObject.playAsync();
+    */ 
+  }
+
+  async function handleRecordButtonPress() {
+    console.log("------------------handleRecordButtonPress----------------");
+    //setRecordedAudio(null);
+    //setRecording(null);
+    if (isRecording) {
+      const audioUri = await stopRecording();
+      if (audioUri != null) {
+        console.log("Saved audio file to", audioUri);
+      } else {
+        console.log("Audio file not saved!!!");
+      }
+
+    } else {
+      await startRecording();
+    }
+  }
+  
+  return (
+    <View>
+      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
+        Artist...Artist...Artist...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
+      </TextTicker>
+      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
+        Artist...Artist...Artist...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
+      </TextTicker>
+      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
+        Artist...Artist...Artist...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
+      </TextTicker>
+      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
+        Artist...Artist...Artist...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
+      </TextTicker>
+      <View style={styles.container}>
+        <Button 
+          title={recording ? 'Stop Recording' : 'Start Recording'}
+          onPress={recording ? stopRecording : startRecording}
+        />
+      </View>
+      <View style={styles.voiceContainer}>
+        <TouchableOpacity style={styles.voiceButton} onPress={handleRecordButtonPress}>
+          <Icon name="microphone"  color={isRecording ? "red" : "blue"} />
+        </TouchableOpacity>
+      </View>
+  </View>
+  );
+};
+
+const styles = StyleSheet.create({
+    container: {
+      flex: 1,
+      justifyContent: 'center',
+      //backgroundColor: '#ecf0f1',
+      backgroundColor: 'lightblue',
+      padding: 10,
+    },
+
+  voiceButton: {
+    alignItems: "center",
+    justifyContent: "center",
+    width: 30,
+    height: 30,
+    borderRadius: 15,
+  },
+  voiceContainer: {
+    paddingTop: 4,
+    flex: 1,
+    //alignItems: "left",
+    //justifyContent: "left",
+  },
+});
+
+export default Avchat;

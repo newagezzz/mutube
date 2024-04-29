@@ -1,6 +1,7 @@
 import axios from "axios"
 import * as ACTIONS from '../types';
 import * as EnvSettings from "../../config/Settings";
+
 const initData = {
   user: null,
 }

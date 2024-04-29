@@ -8,6 +8,7 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 //import { FontAwesome as Icon } from '@expo/vector-icons';
 import { useSelector, useDispatch } from 'react-redux';
 import {LoadUserAction} from "../store/actions/userAction"
+import {GetDeviceAction} from "../store/actions/employeeAction"
 
 // You can explore the built-in icon families and icons on the web at https://icons.expo.fyi/
 function TabBarIcon(props: {
@@ -25,24 +26,34 @@ export default function TabLayout() {
     {funcName: "index", iconName: "home", href: null},
     {funcName: "Wechat", iconName: "wechat", href: "Wechat"},
     {funcName: "Ranking", iconName: "line-chart", href: "Ranking"},
-    {funcName: "Artist", iconName: "microphone", href: "Artist"},
     {funcName: "Search", iconName: "search-plus", href: "Search"},
     {funcName: "VideoList", iconName: "search-minus", href: "VideoList"},
     {funcName: "Playlist", iconName: "music", href: "Playlist"},
+    {funcName: "Kintai", iconName: "building", href: "Kintai"},
     {funcName: "Setting", iconName: "gear", href: "Setting"},
   ];
 
+  const device = useSelector(state  => state.employeeReducer.device);
   const user = useSelector(state => state.userReducer.user);
   const dispatch = useDispatch();
-  console.log("-------------------TabLayout(Before LoadUserAction)-------------");
+  console.log("↓↓↓↓↓↓↓↓↓↓↓↓↓↓-------------TabLayout(Before LoadUserAction)-------------");
   console.log(user);
-
-  //dispatch({ type: 'user/LOAD' });
+  console.log("device:[" + device + "]");
+  console.log("↑↑↑↑↑↑↑↑↑↑↑↑↑↑-------------TabLayout(After LoadUserAction)-------------");
+  
   if (user == undefined || user == null) { 
+    //dispatch({ type: 'user/LOAD' });
     LoadUserAction(dispatch);
   }
-  console.log("-------------------TabLayout(After LoadUserAction)-------------");
+  if (device == undefined || device == null) { 
+    //dispatch({ type: 'device/GET' });
+    GetDeviceAction(dispatch);
+  }
+ 
+  console.log("↓↓↓↓↓↓↓↓↓↓↓↓↓↓-------------TabLayout(After LoadUserAction)-------------");
   console.log(user);
+  console.log("device:[" + device + "]");
+  console.log("↑↑↑↑↑↑↑↑↑↑↑↑↑↑-------------TabLayout(After LoadUserAction)-------------");
 
   return (
     <Tabs

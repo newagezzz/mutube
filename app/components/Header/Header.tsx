@@ -28,6 +28,8 @@ const Header = (): Node => {
   };
 
   const user = useSelector(state => state.userReducer.user);
+  const status = useSelector(state => state.employeeReducer.status);
+  const employee = useSelector(state => state.employeeReducer.employee);
   const dispatch = useDispatch();
   console.log("------------------------Header-------User-------")
   console.log(user);

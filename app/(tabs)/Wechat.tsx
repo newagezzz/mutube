@@ -1,24 +1,15 @@
 import React from 'react';
 import {Text, View, ScrollView, TextInput, Button, Pressable, StyleSheet, Image} from 'react-native';
 import { useState, useEffect } from "react";
-//import { useLocation } from "react-router";
-//import { io } from "socket.io-client";
 import io from "socket.io-client";
 import {MsgContent, UserInfo}  from "../common/types";
-//import { Grid, Box } from '@material-ui/core';
-//import DeviceInfo from 'react-native-device-info';
 import { useSelector, useDispatch } from 'react-redux';
 import * as ACTIONS from '../store/types';
 import * as EnvSettings from "../config/Settings";
+//import WhiteBoard from '../components/WhiteBoard';
 
-//var messageList: MsgContent[] = [];
-//var msg: MsgContent = {name: "", message: "", confirmed: false, postat: ""};
-//var message: string = "";
 console.log("!!!!!!!!!!!!!!!!Wechat!!!!!!!!Starting!!!!!!!!");
-//const socket = io("http://10.0.2.2:8088");
 const socket = io(EnvSettings.REACT_APP_MUSERVER);
-//const socket = io("http://127.0.0.1:8088");
-//const socket = io(process.env.REACT_APP_PROJECT_ID);
 console.log("!!!!!!!!!!!!!!!!Wechat!!!!!!!!Before socket.on(connect))!!!!!!!!");
 socket.on("connect", () => {
     console.log(`接続が確立されました!!!`);
@@ -28,25 +19,7 @@ socket.on("disconnect", () => {
     console.log(`接続が切断されました!!!`);
 });
 console.log("!!!!!!!!!!!!!!!!Wechat!!!!!!!!Ater socket.on(connect))!!!!!!!!");
-/*
-socket.on("chat", (msg) => {
-    console.log("!!!!!!!!!!!!!!!!Wechat!!!!!!!!socket.on!!!!!!!!");
-    console.log("message received!!!!");
-    console.log(msg);
-    console.log(messageList);
-    console.log("----before-------------");
-    //setMessageList((messageList) => [...messageList, messageContent]);
-    //setMessageList((messageList) => updMessageList(messageList, messageContent));
-    //setMessageList([...messageList, messageContent]);
-    messageList = updMessageList(messageList, msg);
-    console.log(messageList);
-    console.log("----after-------------");
-});
-*/
 const updMessageList = ((msgList:MsgContent[], msg: MsgContent) => {
-    //console.log("!!!!!!!!!!!!!!!!MainChat!!!!!!!!updMessageList!!!!!!!!");
-    //console.log("----msgList[before setMessageList]-------------");
-    //console.log(msgList);
 
     var msgListX: MsgContent[] = []
     var flg = false
@@ -260,6 +233,7 @@ const Wechat = ( props: any ) => {
   return (
     <>
       { user ? dispChat(user.name.first) : dispLogin()}
+      {/*<WhiteBoard props={[...props, user]} />*/}
     </>
   )
 }

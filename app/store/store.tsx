@@ -9,7 +9,7 @@ import promise from "redux-promise-middleware";
 //import { composeWithDevTools } from 'remote-redux-devtools';
 //const promise = createPromise({ types: { fulfilled: 'success' } });
 //const promise = createPromise();
-import reducer from "./reducers/index";
+import reducer from "./reducers/reducers";
 //import { createSlice, configureStore } from '@reduxjs/toolkit'
 
 //const middleware = [ promise, thunk, logger ];

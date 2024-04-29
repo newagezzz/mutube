@@ -4,6 +4,9 @@ import {MsgContent, UserInfo, Point, LineInfo }  from "../common/types";
 import TextTicker from 'react-native-text-ticker'
 import { useSelector, useDispatch } from 'react-redux';
 import Svg, { Polyline, Rect } from "react-native-svg";
+import { ColorPicker } from 'react-native-color-picker'; 
+import { TriangleColorPicker, toHsv  } from 'react-native-color-picker'; 
+//import ColorPalette from 'react-native-color-palette'
 import io from "socket.io-client";
 import * as ACTIONS from '../store/types';
 import * as EnvSettings from "../config/Settings";
@@ -19,17 +22,17 @@ socket.on("disconnect", () => {
 });
 console.log("!!!!!!!!!!!!!!!!Setting!!!!!!!!Ater socket.on(connect))!!!!!!!!");
 
-//const Setting = () => {
-const Setting = (props: any) => {
-  //console.log("!!!!!!!!!!!!!!!!Setting!!!!!!!!!!!!!!!!");
+const WhiteBoard = (props: any) => {
+  console.log("!!!!!!!!!!!!!!!!WhiteBoard!!!!!!!!!!!!!!!!");
   //console.log("------props-------")
   //console.log(props);
   //console.log("-------------")
 
-  const user = useSelector(state => state.userReducer.user);
-  const dispatch = useDispatch();
-  //console.log("------------------------Setting-------User-------")
-  //console.log(user);
+  //const user = useSelector(state => state.userReducer.user);
+  //const dispatch = useDispatch();
+  const {user} = props;
+  console.log("------------------------Setting-------User-------")
+  console.log(user);
 
   //thisprops = props;
  
@@ -235,57 +238,40 @@ const Setting = (props: any) => {
   }
 
   return (
-    <View style={{ flexDirection: 'column', justifyContent: 'space-between'}}>
-      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
-        Setting...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
-      </TextTicker>
-      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
-        Setting...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
-      </TextTicker>
-      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
-        Setting...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
-      </TextTicker>
-      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
-        Setting...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
-      </TextTicker>
-      <TextTicker style={{ fontSize: 24 }} duration={3000} loop bounce repeatSpacer={50} marqueeDelay={1000}>
-        Setting...!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!!!!Under Construction!!!
-      </TextTicker>
-      <View style={styles.overlay}>
-        <View pointerEvents="auto"
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={onPointerUp}
-          onTouchMove={onTouchMove}
-          onTouchStart={onTouchStart}
-          onTouchEnd={onTouchEnd}
-          onTouchCancel={onTouchCancel}
-        >
-          <Svg 
-               height={height} width={width} viewBox={`0 0 ${width} ${height}`}>
-            {/* 背景 */}
-            <Rect
-              x={0}
-              y={0}
-              width={width}
-              height={height}
-              stroke="#000"
-              strokeWidth="1"
-              fill="#fff"
-              opacity="0.0"
-              //style="fill-opacity: .25;"
-            />
-            {/* 線 */}
-            {lineList.map((line, index) => dispLine(line, index))}
-            {dispLine({color: color, points: points}, 1)}
-          </Svg>
-        </View>
-        <View style={{ flexDirection: 'column', justifyContent: 'space-between'}} >
-          {dispColorList()}
-          <Button onPress={clrLines} title="クリア" color="#841584" accessibilityLabel="クリア"/>
-        </View>
+    <View style={styles.overlay}>
+      <View pointerEvents="auto"
+        onPointerDown={onPointerDown}
+        onPointerMove={onPointerMove}
+        onPointerUp={onPointerUp}
+        onTouchMove={onTouchMove}
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        onTouchCancel={onTouchCancel}
+      >
+        <Svg 
+              height={height} width={width} viewBox={`0 0 ${width} ${height}`}>
+          {/* 背景 */}
+          <Rect
+            x={0}
+            y={0}
+            width={width}
+            height={height}
+            stroke="#000"
+            strokeWidth="1"
+            fill="#fff"
+            opacity="0.0"
+            //style="fill-opacity: .25;"
+          />
+          {/* 線 */}
+          {lineList.map((line, index) => dispLine(line, index))}
+          {dispLine({color: color, points: points}, 1)}
+        </Svg>
       </View>
-    </View>      
+      <View style={{ flexDirection: 'column', justifyContent: 'space-between' }} fill-opacity="0.0">
+        {dispColorList()}
+        <Button onPress={clrLines} title="クリア" color="#841584" accessibilityLabel="クリア"/>
+      </View>
+    </View>
   );
 }
 
@@ -376,4 +362,4 @@ On the Web, I further use e.nativeEvent which is of the type PointerEvent, and I
   } ;
 */
 //export Point;
-export default Setting;
+export default WhiteBoard;

@@ -1,10 +1,9 @@
 // Environtment variable import
 import Config from 'react-native-config';
 import { Platform } from 'react-native';
-import * as SECRET from "../secret/index"
-
-const API_KEY = SECRET.YOUTUBE_API_KEY
-const MUSERVER_GCP = SECRET.MUSERVER_GCP_URL
+import * as MYSECRET from '../../mysecret/mysecret'
+const API_KEY = MYSECRET.YOUTUBE_API_KEY
+const MUSERVER_GCP = MYSECRET.MUSERVER_GCP_URL
 const YTMAXRECORDS = 50;
 const YTSORTBY = "title";
 const YTTYPE = "video"
@@ -17,6 +16,7 @@ export const YTURL = `https://youtube.googleapis.com/youtube/v3/search?&part=sni
 export const YTIMGURL = `https://i.ytimg.com/vi/`;
 export const YTDLDURL = "https://www.youtube.com/watch?v="
 export const RANDOM_USER_API = "https://randomuser.me/api/"
+export const GET_HOLIDAY_API = "https://api.national-holidays.jp/"
 export const isAndroid: boolean = Platform.OS === 'android';
 export const isIos: boolean = Platform.OS === 'ios';
 export const isWeb: boolean = Platform.OS === 'web';
@@ -36,7 +36,8 @@ if (MUTUBE_MODE == "release") {
 } else {
     varUrl = MUSERVER_LOCAL_WEB;
 }
-export const REACT_APP_MUSERVER = varUrl ? varUrl : "http://localhost:8088";
+export const REACT_APP_MUSERVER = varUrl ? varUrl : "http://localhost:8088/";
+
 console.log("!!!!!!!!!!!!!!config/Settings!!!!!!!!!!!!!!!!!");
 console.log("-----------isWeb:[" + isWeb + "]!!!!!!!!!!!!!!!!!");
 console.log("-----------process.env.REACT_APP_MUSERVER:[" + process.env.REACT_APP_MUSERVER + "]!!!!!!!!!!!!!!!!!");
